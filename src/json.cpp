@@ -2,9 +2,13 @@
 #include "json.h"
 
 namespace json {
-  value::Any Object::get(const std::string& key) {
-    if (data.contains(key)) return data[key];
+  value::Any Object::get(const std::string& key) const {
+    if (data.contains(key)) return data.at(key);
     return value::Undefined{};
+  }
+
+  bool Object::empty() const {
+    return data.empty();
   }
 
   void Object::add(const std::string& key, const value::Any& v) {

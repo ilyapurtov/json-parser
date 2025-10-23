@@ -18,6 +18,8 @@ namespace json::parser {
 
   Object Parser::parse() {
     get();
+    while (c == ' ')
+      get();
     if (c == '{') {
       get();
       return eatObject();
@@ -41,8 +43,10 @@ namespace json::parser {
           throw UnexpectedTokenError(line, c);
         }
       } else if (c == ',') {
-        get();
-        key.clear();
+        if (!key.empty()) {
+          get();
+          key.clear();
+        } else throw UnexpectedTokenError(line, c);
       } else if (isspace(c)) {
         if (c == '\n') line++;
         get();
