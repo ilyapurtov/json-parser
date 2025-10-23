@@ -66,6 +66,12 @@ namespace json::parser {
       get();
       return eatObject();
     }
+    if (isalpha(c)) {
+      std::string keyword = eatKeyword();
+      if (keyword == "true") return true;
+      if (keyword == "false") return false;
+      if (keyword == "null") return value::Null{};
+    }
     if (isdigit(c)) {
       return eatNumber();
     }
@@ -81,6 +87,15 @@ namespace json::parser {
     }
     get();
     return value;
+  }
+
+  std::string Parser::eatKeyword() {
+    std::string keyword;
+    while (isalpha(c)) {
+      keyword += c;
+      get();
+    }
+    return keyword;
   }
 
   int Parser::eatNumber() {

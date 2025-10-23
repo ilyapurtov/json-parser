@@ -24,6 +24,7 @@ namespace json::parser {
     value::Any parseValue();
 
     std::string eatString();
+    std::string eatKeyword();
 
     int eatNumber();
 
